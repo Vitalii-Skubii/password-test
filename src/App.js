@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { getPasswordStrength } from './helpers/getPasswordStrength';
 import './App.css';
+import { PasswordStrengthIndicator } from './components/PasswordStrengthIndicator/PasswordStrengthIndicator';
+import { PasswordInput } from './components/PasswordInput/PasswordInput';
+import { PasswordInfo } from './components/PasswordInfo/PasswordInfo';
 
-function App() {
+const App = () => {
+  const [password, setPassword] = useState('');
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const strength = getPasswordStrength(password);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <PasswordInput
+        password={password}
+        handlePasswordChange={handlePasswordChange}
+      />
+      <PasswordStrengthIndicator strength={strength} />
+      <PasswordInfo strength={strength} />
     </div>
   );
-}
+};
 
 export default App;
